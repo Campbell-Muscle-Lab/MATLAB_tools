@@ -1,0 +1,14 @@
+title: Just the Docs Template
+description: A starter template for a Jeykll site using the Just the Docs theme!
+theme: just-the-docs
+
+url: https://Campbell-Muscle-Lab.github.io/FiberVent
+
+aux_links:
+  Template Repository: https://github.com/Campbell-Muscle-Lab/FiberVent
+
+  plugins:
+    - jekyll-default-layout
+
+mermaid:
+  version: "9.1.3"
