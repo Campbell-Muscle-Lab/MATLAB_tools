@@ -3,17 +3,9 @@ title: Home
 layout: home
 ---
 
-Ken was here 2
+This is documentation for the MATLAB_tools package for the [Campbell lab](https://www.campbellmusclelab.org) at the [University of Kentucky](https://www.uky.edu).
 
-```mermaid
-graph TD;
-    accTitle: the diamond pattern
-    accDescr: a graph with four nodes: A points to B and C, while B and C both point to D
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
+
 
 This is a *bare-minimum* template to create a Jekyll site that uses the [Just the Docs] theme. You can easily set the created site to be published on [GitHub Pages] – the [README] file explains how to do that, along with other details.
 

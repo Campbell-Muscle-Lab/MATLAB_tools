@@ -8,10 +8,9 @@ name: Deploy Jekyll site to Pages
 
 on:
   push:
-    branches:
-      - "main"
-    paths:
-      - "docs/**"
+    branches: ["main"]
+    paths: ["docs/**"]
+
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,7 +35,7 @@ jobs:
         working-directory: docs
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -54,9 +53,9 @@ jobs:
           JEKYLL_ENV: production
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: docs/_site
+          path: docs/_site/
 
   # Deployment job
   deploy:
