@@ -3,7 +3,7 @@ title: Home
 layout: home
 ---
 
-Ken was here
+Ken was here 2
 
 ```mermaid
 graph TD;
