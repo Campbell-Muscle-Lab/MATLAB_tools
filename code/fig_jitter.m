@@ -6,6 +6,7 @@ function fig_jitter(t, data_label, f1_label, options)
         data_label (1,1) string
         f1_label (1,1) string
 
+        options.f2_label (1,1) string = ""
         options.grouping_label (1,1) string = ""
         options.figure_handle (1,1) double = 0
         options.subplot_handle (1,1) double = 0
@@ -13,10 +14,6 @@ function fig_jitter(t, data_label, f1_label, options)
         options.f2_spacing = 1
     end
 
-    jd(1).points{1} = [1, 2, 3, 4];
-    jd(1).points{2} = [2.5, 3.5, 5];
- 
-    jd(2).points{1} = [3.5, 3.7, 5];
     % Code
 
     % Make the figure if necessary
@@ -29,16 +26,16 @@ function fig_jitter(t, data_label, f1_label, options)
         else
             figure(options.figure_handle);
             sp = layout_subplots()
-            % sp = initialise_publication_quality_figure( ...
-            %     'no_of_panels_high', 1, ...
-            %     'no_of_panels_wide', 1, ...
-            %     'axes_padding_left', 1.25, ...
-            %     'axes_padding_right', 0.3, ...
-            %     'axes_padding_top', 1.5, ...
-            %     'axes_padding_bottom', 1, ...
-            %     'panel_label_font_size', 0);
-        end
+         end
     end
+
+    % Extract the data
+    jd = table_to_jitter_format(t, data_label, f1_label, ...
+            f2_label = options.f2_label, ...
+            grouping_label = options.grouping_label);
+
+    % Work out how many groups there are
+
 
     % Work out number of f1 and f2 categories
     no_of_f1_cats = 0;
@@ -47,26 +44,35 @@ function fig_jitter(t, data_label, f1_label, options)
         no_of_f1_cats = max([no_of_f1_cats numel(jd(f2).points)])
     end
 
-    % Draw
-    hold on;
-
-    x = 1;
+    % Create a matrix for swarm plot
+    x_anchor = 1;
+    x = [];
+    y = [];
     for f2_i = 1 : no_of_f2_cats
         for f1_i = 1 : no_of_f1_cats
             try
-                y = jd(f2_i).points{f1_i};
+                y_temp = jd(f2_i).points{f1_i};
             catch
-                x = x + 1
+                x_anchor = x_ancho + 1
                 continue;
             end
-            plot(x, y, 'bo');
-            x = x + 1;
+            x = [x ; x_anchor * ones(numel(y_temp), 1)];
+            y = [y ; y_temp];
+
+            x_anchor = x_anchor + 1;
         end
-        if (f2_i < (no_of_f2_cats - 1))
-            x = x + options.f2_spacing;
+        if (f2_i < no_of_f2_cats)
+            x_anchor = x_anchor + options.f2_spacing;
         end
     end
 
+    % plot(2,3, 'bo')
+
+    swarmchart(x, y)
+
+    % hold on;
+    % 
+    % swarmchart(x, y+0.3)
 
 
 

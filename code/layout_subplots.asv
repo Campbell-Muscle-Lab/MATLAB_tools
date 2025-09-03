@@ -153,8 +153,16 @@ function subplots = layout_subplots(options);
             % Add the label if required
             if (options.panel_labels(subplot_counter) ~= "")
 
-                x_label = -options.padding_left(subplot_counter)
-                y_label = axis_height + options.padding_top(subplot_counter)
+                h = subplots(subplot_counter);
+                h.Units = 'inches';
+                pos = h.Position
+                x_label = pos(1) - 0*options.padding_left(subplot_counter)
+                y_label = pos(2)
+                % 
+                % l_label = -options.padding_left(subplot_counter) / ...
+                %         (rhs(subplot_counter) - lhs(subplot_counter));
+                % t_label = (axis_height + options.padding_top(subplot_counter)) / ...
+                %             axis_height;
 
                 text(x_label, y_label, ...
                         options.panel_labels(subplot_counter), ...
@@ -164,7 +172,13 @@ function subplots = layout_subplots(options);
                         FontName = options.panel_label_font_name, ...
                         FontSize = options.panel_label_font_size, ...
                         FontWeight = options.panel_label_font_weight);
+
+                drawnow;
+
+                return
             end
+
+            drawnow;
 
             % Increment counter
             subplot_counter = subplot_counter + 1;
