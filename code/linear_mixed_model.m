@@ -2,8 +2,8 @@ function stats = linear_mixed_model(t, data_label, f1_label, options);
 
     arguments
         t (:,:) table
-        data_label (1,:) string
-        f1_label (1,:) string
+        data_label (1,1) string
+        f1_label (1,1) string
         options.f2_label (1,1) string = ""
         options.grouping_label (1,1) string = ""
         options.figure_handle (1,1) double = 0

@@ -25,6 +25,7 @@ function subplots = layout_subplots(options);
         options.panel_label_font_size (1,1) double = 12
         options.panel_label_font_name (1,1) string = "Helvetica"
         options.panel_label_font_weight (1,1) string = "Bold"
+        options.panel_labels (1,:) string = ""
     end
 
     % Set some defaults
@@ -34,6 +35,16 @@ function subplots = layout_subplots(options);
 
     % Work out some basics
     no_of_panels = options.panels_wide * options.panels_high;
+
+    % If there is more than one panel, we should prepare to add
+    % panel labels
+    if (no_of_panels > 1)
+        if (all(options.panel_labels == ""))
+            for i = 1 : no_of_panels
+                options.panel_labels(i) = string(sprintf('%s', i+64))
+            end
+        end
+    end
 
     % Goal is to come up with arrays that are no_of_panels long for
     %   options.padding_top
@@ -67,8 +78,7 @@ function subplots = layout_subplots(options);
     options.padding_right_adjustments = expand_out_axes_properties( ...
         options.padding_right_adjustments, options.panels_wide, options.panels_high, "row");
 
-
-    % Set a subplot counter and a top_anchor
+    % Set a subplot counter
     subplot_counter = 1;
 
     % Loop through the rows
@@ -138,6 +148,21 @@ function subplots = layout_subplots(options);
             h = (top(subplot_counter) - bottom(subplot_counter)) / options.figure_height;
 
             subplots(subplot_counter) = subplot('Position', [l b w h]);
+
+            % Add the label if required
+            if (options.panel_labels(subplot_counter) ~= "")
+                l_label = -options.padding_left(subplot_counter) / ...
+                        (rhs(subplot_counter) - lhs(subplot_counter));
+                t_label = (axis_height + options.padding_top(subplot_counter)) / ...
+                            axis_height;
+                text(l_label, t_label, ...
+                        options.panel_labels(subplot_counter), ...
+                        HorizontalAlignment = 'left', ...
+                        VerticalAlignment = 'top', ...
+                        FontName = options.panel_label_font_name, ...
+                        FontSize = options.panel_label_font_size, ...
+                        FontWeight = options.panel_label_font_weight);
+            end
 
             % Increment counter
             subplot_counter = subplot_counter + 1;
